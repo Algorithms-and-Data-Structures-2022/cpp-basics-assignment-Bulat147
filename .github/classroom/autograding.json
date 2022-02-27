@@ -1,0 +1,94 @@
+{
+  "tests": [
+    {
+      "name": "Task 1. Squared difference",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"squared difference\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Task 2. Check bit position",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"check bit position\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Task 3. Find max element",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"find max element\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Task 4. Swap argument values",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"swap argument values\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Task 5. Sum of array elements",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"sum of array elements\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Task 6. Find max array element",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"find max array element\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Task 7. Allocate array",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"allocate array\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Task 8. Clone array",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"clone array\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "Task 9. Print every k-th array element",
+      "setup": "",
+      "run": "ctest -VVV --output-on-failure --test-dir build -R \"print every kth array element\"",
+      "input": "",
+      "output": "",
+      "comparison": "exact",
+      "timeout": 1,
+      "points": 1
+    }
+  ]
+}

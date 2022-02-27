@@ -1,0 +1,60 @@
+# For details refer https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions.
+name: GitHub Classroom
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ 'master', 'main' ]
+    paths: [ 'src/**', 'include/**' ]
+
+env:
+  # CMake build type: Release, Debug, RelWithDebInfo, etc.
+  BUILD_TYPE: Release
+
+defaults:
+  run: { shell: bash }
+
+jobs:
+  autograding:
+    name: Autograding
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: { submodules: 'recursive', fetch-depth: 0 }
+
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{github.workspace}}/build
+
+      - name: Configure CMake
+        working-directory: ${{github.workspace}}/build
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+      - name: CMake Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . --config $BUILD_TYPE
+
+      - name: GitHub Autograding
+        uses: education/autograding@v1
+        continue-on-error: true
+        id: autograder
+
+      # Add the badge with the current student's score.
+      - name: Checkout badges branch
+        run: git checkout badges || git checkout -b badges
+
+      - name: Generate badge with a score
+        uses: markpatterson27/points-bar@v1
+        with:
+          points: ${{ steps.autograder.outputs.points }}
+          path: '.github/badges/points-bar.svg'
+          label: 'Score'
+          type: badge
+
+      - name: Update badge with a score
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add '.github/badges/points-bar.svg'
+          git commit -m "Add/Update points bar" || exit 0
+          git push origin badges
