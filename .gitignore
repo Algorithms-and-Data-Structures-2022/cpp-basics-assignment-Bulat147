@@ -1,0 +1,13 @@
+# build files
+cmake-build*
+build*
+
+# IDE files
+.idea
+
+# Executables
+*.exe
+
+# Compiled Dynamic librarires
+*.so
+*.dll

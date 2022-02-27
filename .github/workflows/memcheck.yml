@@ -1,0 +1,40 @@
+name: Check Memory Leaks
+
+on: [ workflow_dispatch ]
+
+defaults:
+  run: { shell: bash }
+
+env:
+  # Memory check requires Debug builds.
+  BUILD_TYPE: Debug
+
+jobs:
+  memcheck:
+    name: Check Memory Leakage
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: { submodules: 'recursive' }
+
+      - name: Install valgrind
+        run: sudo apt-get -qq update && sudo apt-get install -qq valgrind
+
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{github.workspace}}/build
+
+      - name: Configure CMake
+        working-directory: ${{github.workspace}}/build
+        run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DENABLE_MEMCHECK=ON
+
+      - name: CMake Build
+        working-directory: ${{github.workspace}}/build
+        run: cmake --build . --config $BUILD_TYPE
+
+      # See more https://cmake.org/cmake/help/latest/manual/ctest.1.html.
+      - name: Run CTest with MemCheck
+        working-directory: ${{github.workspace}}/build
+        run: >
+          ctest -VVV -C $BUILD_TYPE -D ExperimentalMemCheck --output-on-failure 
+          --overwrite MemoryCheckCommandOptions="--tool=memcheck --leak-check=full --error-exitcode=100"
